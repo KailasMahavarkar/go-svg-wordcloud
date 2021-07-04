@@ -2,3 +2,21 @@
 /.google-cookie
 /temp.jpg
 /__pycache__
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# ai extensions
+*.ai
+
+# svg files
+*.svg
+
+# png files
+*.png
