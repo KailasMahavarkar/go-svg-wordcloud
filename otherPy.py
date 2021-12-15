@@ -1,5 +1,6 @@
 import os
 import re
+import matplotlib
 
 import numpy as np
 from matplotlib.colors import ListedColormap
@@ -7,12 +8,10 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from wordcloud import WordCloud
 
-
-from svgPro.generateWords import *
-from svgPro.makeMASK import Mask
-from Improve.color.color import getRGB
-from svgPro.wordfilter import searchWordFilterWrapper, searchWordFilter
-from Improve.Improve import executorClosure, executor
+import color
+from generateWords import *
+from makeMASK import Mask
+from wordfilter import searchWordFilterWrapper, searchWordFilter
 
 context = {}
 
@@ -41,12 +40,10 @@ class Basic:
 
         # context
         self.context = context
+        print((self.context))
 
         # get context
-        if isinstance(context, list):
-            self.context = {random.choice(self.context): random.randrange(3, 20) for _ in self.context}
-        else:
-            self.context = context()
+        # self.context = {random.choice(self.context): random.randrange(3, 20) for _ in self.context}
 
         # width
         self.width = width
@@ -94,11 +91,13 @@ class Basic:
             self.colorMap = ListedColormap(colorMap)
         elif type(colorMap) == str:
             if colorMap not in plt.colormaps():
-                raise ValueError("ColorMap must be valid i.e {s}".format(s=plt.colormaps()))
+                raise ValueError(
+                    "ColorMap must be valid i.e {s}".format(s=plt.colormaps()))
             else:
                 self.colorMap = colorMap
         else:
-            raise ValueError("ColorMap must be type List ['#ac0000', '#ae0001']")
+            raise ValueError(
+                "ColorMap must be type List ['#ac0000', '#ae0001']")
 
         myFonts = ["Acme", "Ubuntu", "Product Sans"]
         # font family
@@ -108,7 +107,8 @@ class Basic:
             self.font = str(fontFamily)
 
         # font url
-        self.font_url = "@import url(https://fonts.googleapis.com/css?family={});".format(self.font)
+        self.font_url = "@import url(https://fonts.googleapis.com/css?family={});".format(
+            self.font)
 
         # background color
         self.bgColor = bgColor
@@ -162,38 +162,23 @@ class Basic:
 
 
 if __name__ == "__main__":
-    query = 'TOR'
+    query = ''
     google = ["#4285f4", "#ea4335", "#fbbc05", "#34a853"]
 
-    words = searchWordFilterWrapper(
-        query=query,
-        stoptypes=['max', 'corrected', 'negative'],
+    words = searchWordFilter(
+        query="photography studios",
+        minlength=2,
+        maxlength=30,
+        minoccurence=1,
+        ignorelist=[],
+        mode=4,
+        stoptypes=['max', 'corrected', 'stopmax', 'negative'],
         singularize=False,
-        minlength=3,
-        minoccurence=2,
-        mode=2
+        sort=True,
+        raw=False
     )
 
-    x = Basic(
-        query=query,
-        margin=0,
-        repeat=True,
-        maskText=query.capitalize(),
-        min_font_size=5,
-        max_font_size=50,
-        rotation_ratio=1,
-        padding=8,
-        context=words,
-        wordcount=300,
-        pages=1,
-        width=1920,
-        height=1080,
-        scale=2,
-        colorMap=google,
-        bgColor=getRGB('white'),
-        fontFamily="Berlin Sans",
-        # fontPath=r"C:\USERS\KAI\APPDATA\LOCAL\MICROSOFT\WINDOWS\FONTS\Product Sans Bold.ttf"
-        fontPath=r"C:\Windows\Fonts\BRLNSDB.TTF"
-    )
-    x.generateSVG()
-    x.saveJPG()
+    wordcloud = WordCloud().generate_from_frequencies(words)
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()

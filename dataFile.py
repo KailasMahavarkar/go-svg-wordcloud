@@ -3,7 +3,16 @@ import random
 specials = ['/', '\\', '\n', '\t', '!', '"', '  # ', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':',
             ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~']
 
-computerViruses = ['1260', '4K', '5lo', 'Abraxas', 'Acid', 'Acme', 'ABC', 'Actifed', 'Ada', 'AGI-Plan', 'AI', 'AIDS', 'AIDS II', 'Alabama', 'Alcon[1]', 'Ambulance', 'Anna Kournikova', 'ANTI', 'AntiCMOS', 'ARCV-n', 'Alureon', 'Autostart', 'Bomber', 'Brain', 'Byte Bandit', 'CDEF', 'Christmas Tree', 'CIH', 'Commwarrior', 'Creeper', 'Eliza', 'Elk Cloner', 'Esperanto', 'Form', 'Fun', 'Graybird', 'Hare', 'ILOVEYOU', 'INIT 1984', 'Jerusalem', 'Kama Sutra', 'Koko', 'Lamer Exterminator', 'MacMag', 'MDEF', 'Melissa', 'Mirai', 'Michelangelo', 'Navidad', 'Natas', 'nVIR', 'Oompa', 'OneHalf', 'Ontario.1024', 'Ontario.2048', 'Ontario', 'Petya', 'Pikachu virus', 'Ping-pong', 'RavMonE.exe', 'SCA', 'Scores', "Scott's Valley", 'SevenDust', 'Marker', 'Simile', 'SMEG engine', 'Stoned', 'Jerusalem', 'WannaCry', 'WDEF', 'Whale', 'ZMist', 'Xafecopy', 'Zuc']
+computerViruses = [
+    '1260', '4K', '5lo', 'Abraxas', 'Acid', 'Acme', 'ABC', 'Actifed', 'Ada', 'AGI-Plan', 'AI', 'AIDS', 'AIDS II',
+    'Alabama', 'Alcon[1]', 'Ambulance', 'Anna Kournikova', 'ANTI', 'AntiCMOS', 'ARCV-n', 'Alureon', 'Autostart',
+    'Bomber', 'Brain', 'Byte Bandit', 'CDEF', 'Christmas Tree', 'CIH', 'Commwarrior', 'Creeper', 'Eliza', 'Elk Cloner',
+    'Esperanto', 'Form', 'Fun', 'Graybird', 'Hare', 'ILOVEYOU', 'INIT 1984', 'Jerusalem', 'Kama Sutra', 'Koko',
+    'Lamer Exterminator', 'MacMag', 'MDEF', 'Melissa', 'Mirai', 'Michelangelo', 'Navidad', 'Natas', 'nVIR',
+    'Oompa', 'OneHalf', 'Ontario.1024', 'Ontario.2048', 'Ontario', 'Petya', 'Pikachu virus', 'Ping-pong',
+    'RavMonE.exe', 'SCA', 'Scores', "Scott's Valley", 'SevenDust', 'Marker', 'Simile', 'SMEG engine', 'Stoned',
+    'Jerusalem', 'WannaCry', 'WDEF', 'Whale', 'ZMist', 'Xafecopy', 'Zuc'
+]
 
 
 linuxDistros = ['Red Hat Linux', 'CentOS', 'Fedora', 'openSUSE', 'Mandrake Linux', 'Asianux', 'ClearOS',

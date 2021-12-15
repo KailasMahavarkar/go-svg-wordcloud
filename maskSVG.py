@@ -1,34 +1,60 @@
 from PIL import Image, ImageDraw, ImageFont
 
+class MASKSVG:
+    def __init__(self, width=1000, height=1000, text=None,padding=8, fontsize=100, font=r"C:\Windows\Fonts\BRLNSDB.TTF"):
+        self.font = font
+        self.text = text
+        self.fontsize = fontsize
+        self.maxwidth = width
+        self.maxheight = height
+        self.data = ""
+        self.padding = padding
 
-def generateSVG(width=1000, height=1000, text=None, fontsize=100, font=r"C:\Windows\Fonts\BRLNSDB.TTF"):
-    fnt = ImageFont.truetype(size=100, font=r"C:\Windows\Fonts\BRLNSDB.TTF")
-    w, h = fnt.getsize(text=text)
-
-    print(w, h)
-
-    svg = """<?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
-    "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">""" + \
-          """<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-        width="{width}" height="{height}">""".format(width=width, height=height) + \
-          """
-          
-        <rect x="0" y="0" width="1000" height="1000" fill="coral"
-        stroke="None" />
-        <text font-size="{fontsize}" x="{x}" y="{y}" class="small">{text}</text>
-        <div style="text-align:center;">
-        <p>HELLO </p>
-        </div>
-        </svg>   
-    """.format(fontsize=fontsize, x=((width - w) // 2), y=(height - h) // 2, text=text)
-    print((width - w) // 2)
-    print((height - h) // 2)
-    return svg
+        if type(self.padding) == int and self.padding > 0:
+            Exception("UNdefines")
 
 
-data = generateSVG(fontsize=50, width=1000, height=1000, text="watermelon")
+    def func(self):
+        font = ImageFont.truetype(font=self.font, size=self.fontsize)
+        fontSize = font.getsize(text=self.text)
+        return fontSize[0]
 
-file = open("sample.svg", mode="w")
-file.write(data)
-file.close()
+    def getBestFit(self):
+        while self.func() >= self.maxwidth:
+            self.fontsize -= 2
+            self.func()
+
+        print("Best fit: ", self.fontsize)
+        return self.fontsize
+
+
+    def generateSVG(self):
+        self.fontsize = self.getBestFit()
+        self.fontsize = self.fontsize - (self.fontsize // self.padding)
+
+        fnt = ImageFont.truetype(self.font, size=self.fontsize)
+        w, h = fnt.getsize(text=self.text)
+
+        width = (self.maxwidth - w) // 2
+        height = self.maxheight // 2
+
+        svg = f"""<?xml version="1.0" encoding="UTF-8"?>
+            <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+            "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="{self.maxwidth}" height="{self.maxheight}">
+                <rect x="0" y="0" width="1000" height="1000" fill="coral" stroke="None" />
+                <text font-size="{self.fontsize}" x="{width}" y="{height}" class="small">{self.text}</text>
+            </svg>
+            """
+
+        self.data = svg
+        return svg
+
+    def save(self):
+        with open("sample.svg", mode="w") as file:
+            file.write(self.data)
+
+zero = MASKSVG(fontsize=200, width=1000, height=1000, text="Kai")
+zero.generateSVG()
+zero.save()
+

@@ -5,9 +5,9 @@ from nltk import tokenize, word_tokenize
 import requests
 import requests.exceptions
 from bs4 import BeautifulSoup
-from svgPro.colorStop import *
+from colorStop import *
 from googlesearch import search
-from svgPro.wordfilter import WordFilter, singleWordFilter, searchWordFilter
+from wordfilter import WordFilter, singleWordFilter, searchWordFilter
 import wikipedia
 import datetime
 import time

@@ -1,8 +1,9 @@
-from PIL import Image, ImageDraw, ImageFont
 import os
-from Improve.color.color import *
-from timeit import default_timer as dt
+import sys
 
+from PIL import Image, ImageDraw, ImageFont
+
+sys.path.append(r"C:\Zero\Improve\color")
 rootPath = os.path.dirname(os.path.abspath(__file__))
 imagePath = os.path.join(rootPath, "cloud", "inPath")
 
@@ -35,7 +36,7 @@ class Mask:
         if type(self.padding) == int and self.padding > 0:
             fontSize = fontSize - (fontSize // self.padding)
 
-        out = Image.new("RGB", (self.width, self.height), getRGB("white"))
+        out = Image.new("RGB", (self.width, self.height), (255, 255, 255))
         fnt = ImageFont.truetype(self.font, size=fontSize)
         w, h = fnt.getsize(text=self.text)
 
@@ -44,16 +45,14 @@ class Mask:
             ((self.width - w) // 2, (self.height - h) // 2),
             text=self.text,
             font=fnt,
-            fill=getRGB("black")
+            fill=(0, 0, 0)
         )
 
         return out, ((self.width - w) // 2, (self.height - h) // 2), fontSize
 
 
 if __name__ == '__main__':
-    query = 'coronavirus'
-    start = dt()
-
+    query = 'Resume Filterer'
     y = Mask(
         text=query,
         width=2000,
@@ -63,12 +62,4 @@ if __name__ == '__main__':
         font=r"C:\Windows\Fonts\BRLNSDB.TTF"
     ).makeMASK()
 
-
-
     y[0].show()
-
-    print(y[1], y[2])
-
-    end = dt()
-
-    print(end - start)

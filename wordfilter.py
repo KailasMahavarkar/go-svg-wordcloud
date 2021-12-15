@@ -3,20 +3,37 @@ import numpy as np
 import requests
 from bs4 import BeautifulSoup
 from googlesearch import search
-from svgPro.colorStop import negative, stopMax, correctedWords
+from colorStop import negative, stopMax, correctedWords
 from collections import Counter
 from contextlib import contextmanager
 import threading
 import _thread
 import random
 import inflector
-from Improve.Improve import timesec, executor
+from Improve import timesec, executor
 import aiohttp
 import asyncio
 import async_timeout
+from typing import Union, List, AnyStr
+import functools
 
 
-# controllers
+def ignore_unhashable(func):
+    uncached = func.__wrapped__
+    attributes = functools.WRAPPER_ASSIGNMENTS + ('cache_info', 'cache_clear')
+
+    @functools.wraps(func, assigned=attributes)
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except TypeError as error:
+            if 'unhashable type' in str(error):
+                return uncached(*args, **kwargs)
+            raise
+
+    wrapper.__uncached__ = uncached
+    return wrapper
+
 
 async def get(url):
     async with aiohttp.ClientSession() as session:
@@ -25,6 +42,7 @@ async def get(url):
                 return await response.text()
         except Exception:
             return ''
+
 
 async def trigger(searchLinks: list, minlength: int = 3, maxlength: int = 15, timeout: int = 5):
     tasks = [asyncio.create_task(get(url=url)) for url in searchLinks]
@@ -36,6 +54,7 @@ async def trigger(searchLinks: list, minlength: int = 3, maxlength: int = 15, ti
         return "Request Closed by Timeout: {}"
     finally:
         master = []
+        # O(n)
         for i, task in enumerate(tasks):
             if task.done() and not task.cancelled():
                 soup = BeautifulSoup(task.result(), "lxml")
@@ -59,28 +78,32 @@ def time_limit(seconds):
         timer.cancel()
 
 
-
-def searchWordFilter(query: str = 'naruto', minlength: int = 3, maxlength: int = 10, stoptypes=None,
+def searchWordFilter(query: str = 'naruto', links: List = None, minlength: int = 3, maxlength: int = 10, stoptypes=None,
                      customlist=None, ignorelist=None, checknumeric: bool = False, minoccurence: int = 2,
                      factor: int = 50, sort: bool = True, mode: int = 1, singularize: bool = True, raw: bool = False):
 
     # 1 result = 0.5 sec
     if mode == 2:
         numresult = 18
-        timeout = 9 + 2   # 2 second fault time
+        timeout = 9 + 2  # 2 second tolerance
     elif mode == 3:
         numresult = 24
-        timeout = 12 + 3   # 3 second fault time
+        timeout = 12 + 3  # 3 second tolerance
+    elif mode == 4:
+        numresult = 36
+        timeout = 18 + 4  # 4 second tolerance
     else:
         numresult = 8
-        timeout = 4 + 1    # 1 second fault time
-
+        timeout = 4 + 1  # 1 second tolerance
 
     if len(query) > 0:
-        searchLinks = search(term=query, num_results=numresult)
-        words = asyncio.run(trigger(minlength=minlength,maxlength=maxlength, searchLinks=searchLinks, timeout=timeout))
+        if links is not None:
+            searchLinks = links
+        else:
+            searchLinks = search(term=query, num_results=numresult)
         return WordFilter(
-            words=words,
+            words=asyncio.run(
+                trigger(minlength=minlength, maxlength=maxlength, searchLinks=searchLinks, timeout=timeout)),
             customlist=customlist,
             stoptypes=stoptypes,
             ignorelist=ignorelist,
@@ -95,17 +118,15 @@ def searchWordFilter(query: str = 'naruto', minlength: int = 3, maxlength: int =
 
 
 def searchWordFilterWrapper(query: str = 'naruto', minlength: int = 3, maxlength: int = 10, stoptypes=None,
-                     customlist=None, ignorelist=None, checknumeric: bool = False, minoccurence: int = 2,
-                     factor: int = 50, sort: bool = True, mode: int = 1, singularize: bool = True,
-                     raw: bool = False):
-
+                            customlist=None, ignorelist=None, checknumeric: bool = False, minoccurence: int = 2,
+                            factor: int = 50, sort: bool = True, mode: int = 1, singularize: bool = True,
+                            raw: bool = False):
     return executor(searchWordFilter, query, minlength, maxlength, stoptypes, customlist, ignorelist,
                     checknumeric, minoccurence, factor, sort, mode, singularize, raw)
 
 
 def singleWordFilter(word: str, stoptypes: list, minlength: int = 3, maxlength: int = 10,
-               customlist=None, ignorelist=None, checknumeric: bool = False, lengthcheck: bool = True):
-
+                     customlist=None, ignorelist=None, checknumeric: bool = False, lengthcheck: bool = True):
     """
     :param word: word string to check
     :param minlength: 3
@@ -146,7 +167,6 @@ def singleWordFilter(word: str, stoptypes: list, minlength: int = 3, maxlength: 
         if word in customlist:
             return False
 
-
     if checknumeric:
         if not all([k.isalnum() for k in word]):
             return False
@@ -157,7 +177,6 @@ def singleWordFilter(word: str, stoptypes: list, minlength: int = 3, maxlength: 
     return True
 
 
-
 def getOTP(maxlength=6):
     possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
     result = []
@@ -166,16 +185,13 @@ def getOTP(maxlength=6):
         result.append(randomChar)
 
     finalResult = ''.join(result)
-    # print(f"Your OTP is {finalResult}")
     return finalResult
 
 
-
-def WordFilter(words: list,  minlength: int = 3, maxlength: int = 10, stoptypes=None,
+def WordFilter(words: list, minlength: int = 3, maxlength: int = 10, stoptypes=None,
                customlist=None, ignorelist=None, checknumeric: bool = False, minoccurence: int = 2,
-               factor: int = 50,  sort: bool = True, lengthcheck: bool = True, singularize: bool = True,
-               raw: bool = False):
-
+               factor: int = 50, sort: bool = True, lengthcheck: bool = True, singularize: bool = True,
+               raw: bool = False) -> object:
     """
     :param words: list of words
     :param minlength: 3
@@ -198,7 +214,7 @@ def WordFilter(words: list,  minlength: int = 3, maxlength: int = 10, stoptypes=
 
     # initially stoptypes list is set to basic
     if stoptypes is None:
-        stoptypes = ['basic', 'corrected']
+        stoptypes = ['basic', 'corrected', 'stopmax', 'negative']
 
     # initially customlist list is empty
     if customlist is None:
@@ -210,17 +226,18 @@ def WordFilter(words: list,  minlength: int = 3, maxlength: int = 10, stoptypes=
 
     for word in words:
         if singleWordFilter(
-            word=word.lower(),
-            minlength=minlength,
-            maxlength=maxlength,
-            stoptypes=stoptypes,
-            customlist=customlist,
-            ignorelist=ignorelist,
-            checknumeric=checknumeric,
-            lengthcheck=lengthcheck
+                word=word.lower(),
+                minlength=minlength,
+                maxlength=maxlength,
+                stoptypes=stoptypes,
+                customlist=customlist,
+                ignorelist=ignorelist,
+                checknumeric=checknumeric,
+                lengthcheck=lengthcheck
         ):
             result.append(word.lower())
 
+    # return result
 
     if singularize:
         singularizedList = []
@@ -230,11 +247,9 @@ def WordFilter(words: list,  minlength: int = 3, maxlength: int = 10, stoptypes=
                 singularizedList.append(singularizedResult)
             else:
                 singularizedList.append(word)
-
         context = dict(Counter(singularizedList))
     else:
         context = dict(Counter(result))
-
 
     # raw 0 | sort 0
     if raw is False and sort is False:
@@ -255,29 +270,45 @@ def WordFilter(words: list,  minlength: int = 3, maxlength: int = 10, stoptypes=
         return {key: value for key, value in context if value >= minoccurence}
 
 
-
-
-if __name__ == '__main__':
+if __name__ == '__xmain__':
+    text = """"""
+    # @ignore_unhashable
+    # @functools.lru_cache(6)
 
     @timesec
     def main():
         res = searchWordFilter(
-            query='robots',
+            query='Mobile Cases',
             minlength=3,
-            minoccurence=2,
-            ignorelist=['autonomous'],
-            stoptypes=['max', 'corrected'],
-            mode=1,
-            singularize=True,
+            maxlength=30,
+            minoccurence=1,
+            ignorelist=[],
+            mode=4,
+            stoptypes=['max', 'corrected', 'stopmax', 'negative'],
+            # singularize=True,
             sort=True,
             raw=False,
         )
 
-        print(res)
-
-
+        ie = []
+        for k, v in res.items():
+            if v > 0:
+                ie.append(k)
+        print(", ".join(ie))
 
     main()
 
 
-
+if __name__ == "__main__":
+    result = searchWordFilter(
+        links=["https://www.sortlist.com/agency/fk-media"],
+        minlength=2,
+        maxlength=30,
+        minoccurence=1,
+        ignorelist=[],
+        mode=4,
+        stoptypes=['max', 'corrected', 'stopmax', 'negative'],
+        singularize=False,
+        sort=True,
+        raw=False
+    )
