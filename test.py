@@ -1,44 +1,30 @@
-# import requests
-#
-# def isFontAvailable(fontfamily):
-#     fontfamily = " ".join([x.capitalize() for x in fontfamily.lower().split(' ')]).replace(' ', '%20')
-#     try:
-#         res = requests.get(f"https://fonts.googleapis.com/css?family={fontfamily}")
-#         print(res.text)
-#         if res.status_code != 200:
-#             return "https://fonts.googleapis.com/css?family=Product%20Sans"
-#     except Exception:
-#         print()
-#
-# isFontAvailable(fontfamily="times new roman")
+import aiohttp
+import asyncio
+from bs4 import BeautifulSoup
+from wordfilter import WordFilter
 
+async def fetch_html(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.text()
 
-# print([[x for x in range(10)] for y in range(10)])
+async def extract_links(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    links = [link.get('href') for link in soup.find_all('a')]
+    return links
 
-from itertools import permutations
-# string = 'c..code..c...o.d.de'
-string = 'abax'
+async def search_links(url):
+    html = await fetch_html(url)
+    links = await extract_links(html)
+    return links
 
-newArr = []
-for i, item in enumerate(string):
-    if i in [3, 12, 13]:
-        continue
-    else:
-        if item not in newArr:
-            newArr.append(item)
+async def main():
+    url = 'https://example.com'
+    links = await search_links(url)
+    print(links)
 
-
-newArr.remove('.')
-print(newArr)
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    words = asyncio.run(main())
+    print(words)
 
 

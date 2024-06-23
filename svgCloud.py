@@ -6,7 +6,7 @@ import json
 from svgwrite.extensions import Inkscape
 from wordcloud import STOPWORDS
 
-from svgPro.generateWords import generateWords
+from generateWords import generateWords
 
 dwg = svgwrite.Drawing('../customCloud/test.svg', profile='full', size=(640, 480))
 inkscape = Inkscape(dwg)

@@ -1,4 +1,5 @@
 # COLOR profile
+import json
 
 colorBase = [
     'Accent', 'Accent_r', 'Blues', 'Blues_r', 'BrBG', 'BrBG_r', 'BuGn', 'BuGn_r', 'BuPu', 'BuPu_r', 'CMRmap',
@@ -992,3 +993,12 @@ negative = [
     'zealot', 'zealous', 'zealously', 'zombie'
 ]
 
+mapp = ""
+for x in negative:
+    mapp += f"\"{x}\": true,\n"
+
+# write file 
+with open("file.txt", mode='w+') as file:
+    file.write(mapp)
+
+# print(mapp)

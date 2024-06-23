@@ -1,33 +1,30 @@
 import os
+import random
 import re
-import matplotlib
-
 import numpy as np
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 from PIL import Image
 from wordcloud import WordCloud
-
-import color
 from generateWords import *
-from makeMASK import Mask
-from wordfilter import searchWordFilterWrapper, searchWordFilter
+from wordfilter import searchWordFilter
+from MaskText2 import MaskText
 
 context = {}
-
 rootPath = os.path.dirname(os.path.abspath(__file__))
 imagePath = os.path.join(rootPath, "cloud", "inPath")
 
 
 class Basic:
     def __init__(
-            self, query=None, margin=10, wordcount=70,
+            self,
+            query=None, margin=10, wordcount=70,
             scale=1, bgColor=None, stopType=stopBasic,
             repeat=True, pages=1, width=1000, height=1000,
             fontPath=None, rotation_ratio=1, colorMap=None, fontFamily=None,
             max_font_size=150, min_font_size=3,
             maskText=None, context=None, padding=8
-    ):
+        ):
 
         # padding max_text
         self.padding = padding
@@ -116,38 +113,38 @@ class Basic:
         # stop Type
         self.stopType = stopType
 
-        self.font = r"C:\USERS\KAI\APPDATA\LOCAL\MICROSOFT\WINDOWS\FONTS\Product Sans Bold.ttf"
+        self.font = r"C:\Windows\Fonts\BRLNSR.TTF"
 
-        self.mask, self.loc, self.maskFontSize = Mask(
+        self.mask =  MaskText(
             text=self.maskText,
             width=self.width,
             height=self.height,
             font=self.font,
             padding=self.padding
-        ).makeMASK()
-
-        # print(self.maskFontSize)
-
-        self.mask = np.array(self.mask)
+        ).makeSVG()
 
     def generateSVG(self):
-        wc = WordCloud(max_words=self.wordcount,
-                       normalize_plurals=True,
-                       width=self.width,
-                       height=self.height,
-                       mask=self.mask,
-                       margin=self.margin,
-                       font_path=self.fontPath,
-                       colormap=self.colorMap,
-                       background_color=self.bgColor,
-                       repeat=self.repeat,
-                       scale=self.scale,
-                       color_func=self.colorFunc,
-                       max_font_size=self.max_font_size,
-                       min_font_size=self.min_font_size,
-                       prefer_horizontal=self.rotation_ratio,
-                       random_state=1
-                       ).generate_from_frequencies(self.context)
+        wc = WordCloud(
+            max_words=self.wordcount,
+            normalize_plurals=True,
+            width=self.width,
+            height=self.height,
+            mask=self.mask,
+            margin=self.margin,
+            font_path=self.fontPath,
+            colormap=self.colorMap,
+            background_color=self.bgColor,
+            repeat=self.repeat,
+            scale=self.scale,
+            color_func=self.colorFunc,
+            max_font_size=self.max_font_size,
+            min_font_size=self.min_font_size,
+            prefer_horizontal=self.rotation_ratio,
+            random_state=1
+        )
+
+        # generate cloud
+        wc.generate_from_frequencies(self.context)
         return wc
 
     def saveJPG(self):
@@ -162,23 +159,33 @@ class Basic:
 
 
 if __name__ == "__main__":
-    query = ''
+    query = "algorithms and data structures"
     google = ["#4285f4", "#ea4335", "#fbbc05", "#34a853"]
-
-    words = searchWordFilter(
-        query="photography studios",
-        minlength=2,
-        maxlength=30,
-        minoccurence=1,
-        ignorelist=[],
-        mode=4,
-        stoptypes=['max', 'corrected', 'stopmax', 'negative'],
-        singularize=False,
-        sort=True,
-        raw=False
+    context= searchWordFilter(
+        query=query,
+        stoptypes=['max', 'corrected', 'negative']
     )
 
-    wordcloud = WordCloud().generate_from_frequencies(words)
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.show()
+    zero = Basic(
+        query=query,
+        context=context,
+        width=1000,
+        height=1000,
+        colorMap="Set1_r",
+        bgColor="black",
+        repeat=True,
+        scale=1,
+        fontPath=f"C:\Windows\Fonts\BRLNSR.TTF",
+    )
+    zero.generateSVG()
+    zero.saveJPG()
+
+    ie = []
+    for k, v in res.items():
+        if v > 0:
+            ie.append(k)
+    print(", ".join(ie))
+
+    # plt.imshow(wordcloud, interpolation='bilinear')
+    # plt.axis("off")
+    # plt.show()

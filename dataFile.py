@@ -1,9 +1,4 @@
-import random
-
-specials = ['/', '\\', '\n', '\t', '!', '"', '  # ', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':',
-            ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~']
-
-computerViruses = [
+computer_viruses = [
     '1260', '4K', '5lo', 'Abraxas', 'Acid', 'Acme', 'ABC', 'Actifed', 'Ada', 'AGI-Plan', 'AI', 'AIDS', 'AIDS II',
     'Alabama', 'Alcon[1]', 'Ambulance', 'Anna Kournikova', 'ANTI', 'AntiCMOS', 'ARCV-n', 'Alureon', 'Autostart',
     'Bomber', 'Brain', 'Byte Bandit', 'CDEF', 'Christmas Tree', 'CIH', 'Commwarrior', 'Creeper', 'Eliza', 'Elk Cloner',
@@ -14,8 +9,7 @@ computerViruses = [
     'Jerusalem', 'WannaCry', 'WDEF', 'Whale', 'ZMist', 'Xafecopy', 'Zuc'
 ]
 
-
-linuxDistros = ['Red Hat Linux', 'CentOS', 'Fedora', 'openSUSE', 'Mandrake Linux', 'Asianux', 'ClearOS',
+linux_distros = ['Red Hat Linux', 'CentOS', 'Fedora', 'openSUSE', 'Mandrake Linux', 'Asianux', 'ClearOS',
                 'Fermi Linux LTS', 'Miracle Linux', 'Oracle Linux', 'Red Flag Linux', 'Rocks Cluster Distribution',
                 'Scientific Linux', 'Berry Linux', 'BLAG Linux and GNU', 'EnGarde Secure Linux', 'Fuduntu', 'Hanthana',
                 'Korora', 'Linpus Linux', 'Linux XP', 'MeeGo', 'Moblin', 'Network Security Toolkit', 'Qubes OS',
@@ -54,7 +48,7 @@ linuxDistros = ['Red Hat Linux', 'CentOS', 'Fedora', 'openSUSE', 'Mandrake Linux
                 'Smallfoot', 'SmoothWall', 'Softlanding Linux System', 'Solus', 'Source Mage', 'Thinstation',
                 'Tinfoil Hat Linux', 'Tiny Core Linux', 'Tizen', 'tomsrtbt', 'Void Linux', 'Yggdrasil Linux/GNU/X']
 
-palette = ['Accent', 'Accent_r', 'Blues', 'Blues_r', 'BrBG', 'BrBG_r', 'BuGn', 'BuGn_r', 'BuPu', 'BuPu_r', 'CMRmap',
+color_palette = ['Accent', 'Accent_r', 'Blues', 'Blues_r', 'BrBG', 'BrBG_r', 'BuGn', 'BuGn_r', 'BuPu', 'BuPu_r', 'CMRmap',
            'CMRmap_r', 'Dark2', 'Dark2_r', 'GnBu', 'GnBu_r', 'Greens', 'Greens_r', 'Greys', 'Greys_r', 'OrRd',
            'OrRd_r', 'Oranges', 'Oranges_r', 'PRGn', 'PRGn_r', 'Paired', 'Paired_r', 'Pastel1', 'Pastel1_r',
            'Pastel2', 'Pastel2_r', 'PiYG', 'PiYG_r', 'PuBu', 'PuBuGn', 'PuBuGn_r', 'PuBu_r', 'PuOr', 'PuOr_r',
@@ -74,7 +68,7 @@ palette = ['Accent', 'Accent_r', 'Blues', 'Blues_r', 'BrBG', 'BrBG_r', 'BuGn', '
            'twilight_shifted',
            'twilight_shifted_r', 'viridis', 'viridis_r', 'winter', 'winter_r']
 
-popSingers = [
+pop_singers = [
     'Ariana Grande', 'Billie Eilish', 'Khalid', 'Post Malone', 'Imagine Dragons', 'Halsey', 'Selena Gomez',
     'Bruno Mars', 'Dua Lipa', 'Shawn Mendes', 'Lady Gaga', 'Panic! at the Disco', 'Rihanna', 'Adele', 'Katy Perry',
     'Charlie Puth', 'The Chainsmokers', 'Beyonce Knowles', 'Sam Smith', 'Cardi B', 'BTS', 'The Weeknd',
@@ -89,7 +83,7 @@ popSingers = [
     'AJR', 'Stray Kids', 'Logan Henderson', 'Loote', 'Momoland', 'CNCO', 'Tom Walker', 'THE BOYZ', 'Maggie Rogers'
 ]
 
-programming = {
+programming_terms = {
     'Assembly': 62, 'Language': 62, 'Lisp': 56, 'BASIC': 66, 'Logo': 66, 'Forth': 68, 'Pascal': 44, 'C': 53,
     'Prolog': 68, 'Smalltalk': 65, 'Scheme': 57, 'SAS': 75, 'SQL': 57, 'C++': 74, 'Ada': 66, 'MATLAB': 68,
     'Object': 63, 'ObjectiveC': 39, 'Caml': 73, 'Cmd': 56, 'Perl': 58, 'Tcl': 47, 'Bash': 74, 'Haskell': 59,
@@ -100,7 +94,7 @@ programming = {
     'Swift': 128, 'Ballerina': 42
 }
 
-football = ['Lionel Messi', 'Cristiano Ronaldo', 'Xavi', 'Andres Iniesta', 'Zlatan Ibrahimovic', 'Radamel Falcao',
+football_players = ['Lionel Messi', 'Cristiano Ronaldo', 'Xavi', 'Andres Iniesta', 'Zlatan Ibrahimovic', 'Radamel Falcao',
             'Robin van Persie', 'Andrea Pirlo', 'Yaya Toure', 'Edinson Cavani', 'Sergio Aguero', 'Iker Casillas',
             'Neymar', 'Sergio Busquets', 'Xabi Alonso', 'Thiago Silva', 'Mesut Ozil', 'David Silva',
             'Bastian Schweinsteiger', 'Gianluigi Buffon', 'Luis Suarez', 'Sergio Ramos', 'Vincent Kompany',
@@ -117,7 +111,7 @@ football = ['Lionel Messi', 'Cristiano Ronaldo', 'Xavi', 'Andres Iniesta', 'Zlat
             'Javier Pastore', 'Henrikh Mkhitaryan', 'Moussa Dembele', 'Hatem Ben Arfa', 'Samir Nasri', 'Shinji Kagawa',
             'Wesley Sneijder', 'Pepe', 'Marek Hamsik', 'Javi Martinez', 'Diego Forlan', 'Paulinho']
 
-physics = ['thermostat', 'Doppler effect', 'electron', 'inductance', 'conductor', 'semiconductor', 'wavelength', 'lens',
+physics_terms = ['thermostat', 'Doppler effect', 'electron', 'inductance', 'conductor', 'semiconductor', 'wavelength', 'lens',
            'centre of gravity', 'simple harmonic motion', 'earth', 'resistance', 'proton', 'field', 'neutron', 'fuse',
            'surface tension', "Planck constant or Planck's constant", 'radiation', 'Brownian motion', 'diffusion',
            'capacitance', 'wave', 'relativity', 'potential difference', 'superfluidity', 'gravity', 'particle',
@@ -132,7 +126,7 @@ physics = ['thermostat', 'Doppler effect', 'electron', 'inductance', 'conductor'
            'static electricity', 'electromotive force', 'energy', 'anion', 'force', "Charles' law", 'current',
            'decibel', 'microwave', 'viscosity', 'inertia', 'diode']
 
-maths = ['acute angle', 'addition', 'algorithm', 'angle', 'arc', 'area', 'average', 'axis', 'base', 'binary',
+math_terms = ['acute angle', 'addition', 'algorithm', 'angle', 'arc', 'area', 'average', 'axis', 'base', 'binary',
          'binomial', 'cardinal number', 'Cartesian coordinates', 'chord', 'circle', 'circumference', 'closed set',
          'coefficient', 'common denominator', 'common factor', 'complex number', 'concentric', 'cone', 'constant',
          'coordinate or co-ordinate', 'cosecant', 'cosine', 'cotangent', 'cube', 'cube root', 'cuboid', 'curve', 'cusp',
@@ -154,7 +148,7 @@ maths = ['acute angle', 'addition', 'algorithm', 'angle', 'arc', 'area', 'averag
          'tetrahedron', 'torus', 'trapezium', 'triangle', 'union', 'universal set', 'value', 'variable', 'vector',
          'Venn diagram', 'volume', 'vulgar fraction', 'x-axis', 'y-axis', 'z-axis', 'zero']
 
-science = ['absolute zero', 'agoraphobia', 'alga', 'algorithm', 'allele', 'alternating current', 'amygdala',
+science_terms = ['absolute zero', 'agoraphobia', 'alga', 'algorithm', 'allele', 'alternating current', 'amygdala',
            'anaphylaxis', 'angiogenesis', 'apoptosis', 'archaeon', 'artesian well', 'ATP', 'bandwidth', 'Beringia',
            'big bang', 'black hole', 'Brownian motion', 'Cambrian Explosion', 'capacitor', 'carbon sequestration',
            'centripetal force', 'chemosynthesis', 'cognitive dissonance', 'complementarity', 'cryptography',
@@ -170,7 +164,7 @@ science = ['absolute zero', 'agoraphobia', 'alga', 'algorithm', 'allele', 'alter
            'theory', 'tidal force', 'time dilation', 'Universal Time', 'urea', 'vestigial', 'wave function',
            'xerophyte', 'yolk', 'zero']
 
-scienceStreams = ['acarology', 'accidence', 'aceology', 'acology', 'acoustics', 'adenology', 'aedoeology',
+science_streams = ['acarology', 'accidence', 'aceology', 'acology', 'acoustics', 'adenology', 'aedoeology',
                   'aerobiology', 'aerodonetics', 'aerodynamics', 'aerolithology', 'aerology', 'aeronautics',
                   'aerophilately', 'aerostatics', 'agonistics', 'agriology', 'agrobiology', 'agrology', 'agronomics',
                   'agrostology', 'alethiology', 'algedonics', 'algology', 'anaesthesiology', 'anaglyptics', 'anagraphy',
@@ -266,7 +260,7 @@ scienceStreams = ['acarology', 'accidence', 'aceology', 'acology', 'acoustics', 
                   'zoophysics', 'zoophysiology', 'zoophytology', 'zoosemiotics', 'zootaxy', 'zootechnics', 'zygology',
                   'zymology', 'zymurgy']
 
-colorTerms = ['aeneous', 'albicant', 'albugineous', 'amaranthine', 'argent', 'atrous', 'aubergine', 'aurulent',
+color_terms = ['aeneous', 'albicant', 'albugineous', 'amaranthine', 'argent', 'atrous', 'aubergine', 'aurulent',
               'azuline', 'azure', 'badious', 'beige', 'brunneous', 'burnet', 'caesious', 'cardinal', 'castaneous',
               'castory', 'celadon', 'celeste', 'cerulean', 'cesious', 'chartreuse', 'chlorochrous', 'chrysochlorous',
               'cinerious', 'cinnabar', 'citreous', 'citrine', 'claret', 'coccineous', 'columbine', 'coquelicot',
@@ -287,7 +281,7 @@ colorTerms = ['aeneous', 'albicant', 'albugineous', 'amaranthine', 'argent', 'at
               'vinous', 'violaceous', 'violet', 'virescent', 'virid', 'viridian', 'vitellary', 'wallflower', 'watchet',
               'wheaten', 'whey', 'willowish', 'xanthic', 'zinnober']
 
-danceStyles = ['allemande', 'beguine', 'bergamask', 'bolero', 'bossa-nova', 'boston', 'bourr�e', 'bransle',
+dance_styles = ['allemande', 'beguine', 'bergamask', 'bolero', 'bossa-nova', 'boston', 'bourr�e', 'bransle',
                'buck-and-wing', 'cabriole', 'cakewalk', 'canary', 'cancan', 'carioca', 'cha-cha', 'chaconne',
                'Charleston', 'cinque-pace', 'conga', 'contredanse', 'cotillion', 'courante', 'czardas', 'doppio',
                'ductia', 'dump', 'estampie', 'fandango', 'farandole', 'farruca', 'flamenco', 'fox-trot', 'galliard',
@@ -300,7 +294,7 @@ danceStyles = ['allemande', 'beguine', 'bergamask', 'bolero', 'bossa-nova', 'bos
                'strathspey', 'tango', 'tarantella', 'tordion', 'tricotee', 'twist', 'two-step', 'varsovienne', 'veleta',
                'volta', 'waltz', 'zamacueca', 'zambra', 'zapateado', 'ziganka', 'zoppetto', 'zouk']
 
-worshipTerms = ['aischrolatry', 'allotheism', 'angelolatry', 'anthropolatry', 'arborolatry', 'archaeolatry',
+worship_terms = ['aischrolatry', 'allotheism', 'angelolatry', 'anthropolatry', 'arborolatry', 'archaeolatry',
                 'astrolatry', 'autolatry', 'bardolatry', 'bibliolatry', 'Christolatry', 'cosmolatry', 'cynolatry',
                 'demonolatry', 'dendrolatry', 'ecclesiolatry', 'epeolatry', 'episcopolatry', 'gamidolatry',
                 'gastrolatry', 'geolatry', 'grammatolatry', 'gyniolatry', 'hagiolatry', 'heliolatry', 'hierolatry',
@@ -310,13 +304,13 @@ worshipTerms = ['aischrolatry', 'allotheism', 'angelolatry', 'anthropolatry', 'a
                 'physiolatry', 'planetolatry', 'plutolatry', 'poetolatry', 'pseudolatry', 'pyrolatry', 'selenolatry',
                 'statolatry', 'staurolatry', 'symbolatry', 'thaumatolatry', 'theriolatry', 'zoolatry']
 
-wisdomTerms = ['anthroposophy', 'chirosophy', 'cosmosophy', 'deipnosophy', 'demonosopher', 'gastrosopher', 'gymnosophy',
+wisdom_terms = ['anthroposophy', 'chirosophy', 'cosmosophy', 'deipnosophy', 'demonosopher', 'gastrosopher', 'gymnosophy',
                'helicosophy', 'hypnosophy', 'misosophy', 'morosophy', 'mysteriosophy', 'neutrosophy', 'ontosophy',
                'palaeosophy', 'pansophy', 'pantosophy', 'philosophy', 'physiophilosophy', 'physiosophy', 'phytosophy',
                'pneumatophilosophy', 'pseudosophy', 'psilosophy', 'psychosophy', 'pyrosophy', 'rhabdology', 'sciosophy',
                'theanthroposophy', 'theosophy', 'zoosophy']
 
-unitsMeasurement = ['aam', 'abampere', 'abvolt', 'acre-breadth', 'ampere', 'angstrom', 'arpent', 'astronomical unit',
+units_of_measurement = ['aam', 'abampere', 'abvolt', 'acre-breadth', 'ampere', 'angstrom', 'arpent', 'astronomical unit',
                     'bar', 'barleycorn', 'barn', 'baud', 'bel', 'butt', 'calorie', 'candela', 'carat', 'centner',
                     'chain', 'chaldron', 'clove', 'cord', 'coulomb', 'cubit', 'curie', 'cusec', 'dalton', 'darcy',
                     'dash', 'decibel', 'denier', 'digit', 'dioptre', 'dol', 'dram', 'dyne', 'elephant', 'ell', 'em',
@@ -333,7 +327,7 @@ unitsMeasurement = ['aam', 'abampere', 'abvolt', 'acre-breadth', 'ampere', 'angs
                     'tod', 'tog', 'ton', 'torr', 'tun', 'vara', 'verst', 'virgate', 'volt', 'watt', 'weber', 'wey',
                     'yardland', 'yrneh', 'zolotnik']
 
-formsGovernment = ['acracy', 'adhocracy', 'albocracy', 'anarchy', 'androcracy', 'anemocracy', 'angelocracy', 'antarchy',
+forms_of_government = ['acracy', 'adhocracy', 'albocracy', 'anarchy', 'androcracy', 'anemocracy', 'angelocracy', 'antarchy',
                    'argentocracy', 'aristarchy', 'aristocracy', 'arithmocracy', 'autarchy', 'autocracy', 'barbarocracy',
                    'beerocracy', 'bestiocracy', 'biarchy', 'binarchy', 'bureaucracy', 'cannonarchy', 'capelocracy',
                    'chiliarchy', 'chirocracy', 'chromatocracy', 'chrysoaristocracy', 'chrysocracy', 'corpocracy',
@@ -359,7 +353,7 @@ formsGovernment = ['acracy', 'adhocracy', 'albocracy', 'anarchy', 'androcracy', 
                    'thalassiarchy', 'thalassocracy', 'thearchy', 'theatrocracy', 'theocracy', 'timarchy', 'timocracy',
                    'triarchy', 'tritarchy', 'tritheocracy', 'whiggarchy', 'xenocracy']
 
-shapeTerms = ['acetabuliform', 'acicular', 'acinaciform', 'aciniform', 'aculeiform', 'adeniform', 'aduncate',
+shape_terms = ['acetabuliform', 'acicular', 'acinaciform', 'aciniform', 'aculeiform', 'adeniform', 'aduncate',
               'aeriform', 'aliform', 'allantoid', 'amygdaloid', 'ancistroid', 'ancoral', 'anguiform', 'anguilliform',
               'ankyroid', 'annodated', 'ansate', 'apsidal', 'aquiform', 'araneiform', 'arborescent', 'arboriform',
               'arcate', 'arciform', 'arcuate', 'arietinous', 'aspergilliform', 'aspidate', 'auriform', 'aveniform',
@@ -409,7 +403,7 @@ shapeTerms = ['acetabuliform', 'acicular', 'acinaciform', 'aciniform', 'aculeifo
               'variform', 'vasculiform', 'vasiform', 'vergiform', 'vermiform', 'verruciform', 'versiform', 'villiform',
               'viperiform', 'vitriform', 'vulviform', 'xiphoid', 'ypsiliform', 'zosteriform']
 
-fabricTerms = ['aba', 'aerophane', 'alepine', 'alpaca', 'angora', 'ardass', 'armure', 'arrasene', 'atlas', 'baft',
+fabric_terms = ['aba', 'aerophane', 'alepine', 'alpaca', 'angora', 'ardass', 'armure', 'arrasene', 'atlas', 'baft',
                'bagging', 'baize', 'balbriggan', 'baldachin', 'balzarine', 'barathea', 'barege', 'barracan', 'barras',
                'barrateen', 'batiste', 'bayadere', 'beaupers', 'bengaline', 'bombazine', 'borato', 'boucl�',
                'brilliantine', 'broadcloth', 'brocade', 'buckram', 'bump', 'bunting', 'burdet', 'burlap', 'burnet',
@@ -440,7 +434,7 @@ fabricTerms = ['aba', 'aerophane', 'alepine', 'alpaca', 'angora', 'ardass', 'arm
                'velvet', 'velvetine', 'vicuna', 'voile', 'wadmal', 'whipcord', 'wigan', 'wincey', 'woolsey',
                'worcester', 'worsted', 'zanella', 'zephyr', 'zibeline']
 
-loveTerms = ['aerophilately', 'ailurophilia', 'ammophilous', 'anemophilous', 'anglophilia', 'anthophilous',
+love_terms = ['aerophilately', 'ailurophilia', 'ammophilous', 'anemophilous', 'anglophilia', 'anthophilous',
              'apodysophilia', 'arctophily', 'astrophile', 'audiophile', 'belonephilia', 'bibliophily', 'canophilia',
              'cartophily', 'chasmophilous', 'chiropterophilous', 'chromophilous', 'chrysophilist', 'clinophilia',
              'coprophilia', 'cynophilist', 'dendrophilous', 'discophile', 'electrophile', 'entomophilous', 'ergophile',
@@ -459,7 +453,7 @@ loveTerms = ['aerophilately', 'ailurophilia', 'ammophilous', 'anemophilous', 'an
              'tropophilous', 'turophile', 'typhlophile', 'xenophilia', 'xerophily', 'xylophilous', 'zoophilia',
              'zoophily']
 
-scientificInstruments = ['absorptiometer', 'accelerometer', 'acetimeter', 'acidimeter', 'actinograph', 'actinometer',
+scientific_instruments = ['absorptiometer', 'accelerometer', 'acetimeter', 'acidimeter', 'actinograph', 'actinometer',
                          'aerometer', 'aethrioscope', 'alcoholometer', 'alcovinometer', 'algometer', 'alkalimeter',
                          'altimeter', 'ammeter', 'anemograph', 'anemometer', 'areometer', 'arthroscope', 'atmometer',
                          'audiometer', 'auriscope', 'auxanometer', 'auxometer', 'ballistocardiograph', 'barograph',
@@ -532,7 +526,7 @@ scientificInstruments = ['absorptiometer', 'accelerometer', 'acetimeter', 'acidi
                          'volumeter', 'wattmeter', 'wavemeter', 'weatherometer', 'xanthometer', 'xylometer',
                          'zymometer', 'zymosimeter']
 
-wordTerms = ['abecedism', 'ablaut', 'acronym', 'acrophonic', 'acroteleutic', 'adversative', 'allolalia', 'alveary',
+word_terms = ['abecedism', 'ablaut', 'acronym', 'acrophonic', 'acroteleutic', 'adversative', 'allolalia', 'alveary',
              'anacrusis', 'annomination', 'apheresis', 'aphesis', 'apocope', 'arithmogram', 'auslaut', 'bahuvrihi',
              'biverbal', 'cacology', 'calligram', 'calque', 'catachresis', 'cheville', 'cledonism', 'cohyponym',
              'definiens', 'diectasis', 'dysphemism', 'echoism', 'eclipsis', 'ecthlipsis', 'epenthesis', 'epeolatry',
@@ -552,7 +546,7 @@ wordTerms = ['abecedism', 'ablaut', 'acronym', 'acrophonic', 'acroteleutic', 'ad
              'tetragrammaton', 'tmesis', 'trionym', 'univocalic', 'verbalism', 'verbatim', 'verbicide', 'verbigeration',
              'verbile', 'verbomania', 'wordbound']
 
-cristianTerms = ['abba', 'ablegate', 'absconce', 'abthane', 'accensor', 'adiaphoron', 'adoptionism', 'advowson',
+cristian_terms = ['abba', 'ablegate', 'absconce', 'abthane', 'accensor', 'adiaphoron', 'adoptionism', 'advowson',
                  'adytum', 'affusion', 'agape', 'agapeistic', 'agapetae', 'aggiornamento', 'agrapha', 'alb', 'almoner',
                  'altarage', 'ambo', 'ambry', 'ambulatory', 'amice', 'ampulla', 'anamnesis', 'anchorite', 'ancress',
                  'anele', 'angelus', 'antechapel', 'antependium', 'antilegomena', 'antipedobaptism', 'antiphon',
@@ -610,7 +604,7 @@ cristianTerms = ['abba', 'ablegate', 'absconce', 'abthane', 'accensor', 'adiapho
                  'vestry', 'vesturer', 'viaticum', 'vicegod', 'wicket', 'wimple', 'xerophagy', 'zeta', 'zucchetto',
                  'zymite']
 
-eatingTerms = ['allotriophagy', 'androphagy', 'anthropophaginian', 'anthropophagous', 'aphagia', 'apivorous',
+eating_terms = ['allotriophagy', 'androphagy', 'anthropophaginian', 'anthropophagous', 'aphagia', 'apivorous',
                'arachnivorous', 'autocoprophagy', 'autophagy', 'baccivorous', 'batrachivorous', 'bibliophagist',
                'calcivorous', 'cardophagus', 'carnivorous', 'carpophagous', 'cepivorous', 'chthonophagia',
                'comburivorous', 'coprophagous', 'creatophagous', 'creophagous', 'detritivore', 'dysphagia', 'endophagy',
@@ -629,7 +623,7 @@ eatingTerms = ['allotriophagy', 'androphagy', 'anthropophaginian', 'anthropophag
                'stercovorous', 'thalerophagous', 'theophagy', 'toxicophagous', 'toxiphagous', 'univorous',
                'vegetivorous', 'vermivorous', 'xerophagy', 'xylophagous', 'zoophagy']
 
-threeRareWords = ['aba', 'abb', 'aby', 'ait', 'ala', 'alb', 'alk', 'alt', 'ama', 'ana', 'ard', 'awn', 'bar', 'bee',
+three_rare_words = ['aba', 'abb', 'aby', 'ait', 'ala', 'alb', 'alk', 'alt', 'ama', 'ana', 'ard', 'awn', 'bar', 'bee',
                   'bel', 'bis', 'bot', 'cep', 'cog', 'col', 'cwm', 'dag', 'dah', 'dal', 'dap', 'daw', 'dit', 'dol',
                   'dop', 'eft', 'eft', 'eke', 'ell', 'ere', 'erg', 'eth', 'fid', 'fie', 'fub', 'fug', 'gad', 'gal',
                   'gar', 'gat', 'gib', 'gid', 'gig', 'hoc', 'hod', 'hoy', 'ife', 'iff', 'ist', 'ivi', 'jib', 'jow',
@@ -641,7 +635,7 @@ threeRareWords = ['aba', 'abb', 'aby', 'ait', 'ala', 'alb', 'alk', 'alt', 'ama',
                   'tow', 'tup', 'tye', 'ure', 'vis', 'vug', 'wen', 'wey', 'wis', 'wye', 'wyn', 'yad', 'yag', 'yam',
                   'yaw', 'yen', 'yeo', 'yew', 'yex', 'yok', 'yon', 'zek', 'zel', 'zho', 'zug']
 
-positiveWords = ['abound', 'abounds', 'abundance', 'abundant', 'accessable', 'accessible', 'acclaim', 'acclaimed',
+positive_words = ['abound', 'abounds', 'abundance', 'abundant', 'accessable', 'accessible', 'acclaim', 'acclaimed',
                  'acclamation', 'accolade', 'accolades', 'accommodative', 'accomodative', 'accomplish', 'accomplished',
                  'accomplishment', 'accomplishments', 'accurate', 'accurately', 'achievable', 'achievement',
                  'achievements', 'achievible', 'acumen', 'adaptable', 'adaptive', 'adequate', 'adjustable', 'admirable',
@@ -898,7 +892,7 @@ positiveWords = ['abound', 'abounds', 'abundance', 'abundant', 'accessable', 'ac
                  'world-famous', 'worth', 'worth-while', 'worthiness', 'worthwhile', 'worthy', 'wow', 'wowed', 'wowing',
                  'wows', 'yay', 'youthful', 'zeal', 'zenith', 'zest', 'zippy']
 
-positiveWords2 = ['absolutely', 'accepted', 'acclaimed', 'accomplish', 'accomplishment', 'achievement', 'action',
+positive_words_v2 = ['absolutely', 'accepted', 'acclaimed', 'accomplish', 'accomplishment', 'achievement', 'action',
                   'active', 'admire', 'adorable', 'adventure', 'affirmative', 'affluent', 'agree', 'agreeable',
                   'amazing', 'angelic', 'appealing', 'approve', 'aptitude', 'attractive', 'awesome', 'beaming',
                   'beautiful', 'believe', 'beneficial', 'bliss', 'bountiful', 'bounty', 'brave', 'bravo', 'brilliant',
@@ -959,7 +953,7 @@ anime = ['Naruto Shippuden', 'Death Note', 'Dragon Ball', 'Fullmetal Alchemist: 
          'Kimi ni Todoke', 'Durarara!!x2', 'Hajime no Ippo', 'Gangsta', 'Mobile Suit Gundam Wing', 'Date A Live',
          'Btooom!', 'Ranma ½', 'Special A', 'Full Metal Panic!', 'Diabolik Lovers']
 
-marvelHEROES = ['Wolverine', 'Spider-Man', 'Thor', 'Iron-Man', 'Hulk', 'Captain America', 'Daredevil', 'Punisher',
+marvel_heroes = ['Wolverine', 'Spider-Man', 'Thor', 'Iron-Man', 'Hulk', 'Captain America', 'Daredevil', 'Punisher',
                 'Deadpool', 'Silver Surfer', 'Gambit', 'Cyclops', 'Mr-Fantastic', 'Nightcrawler', 'Nick Fury',
                 'Human Torch', 'Iceman', 'Professor X', 'Colossus', 'Bucky Barnes', 'Doctor Strange', 'Storm',
                 'Jean Grey', 'Rogue', 'Elektra', 'Emma Frost', 'Thing', 'Black Bolt', 'She  Hulk', 'Invisible Woman',
@@ -974,13 +968,13 @@ marvelHEROES = ['Wolverine', 'Spider-Man', 'Thor', 'Iron-Man', 'Hulk', 'Captain 
                 'Rachel Grey', 'Firestar', 'Layla Miller', 'Nico Minoru', 'Eric O  Grady', 'Ben Reilly', 'Spectrum',
                 'Dazzler']
 
-dog = ['Loyal', 'trustworthy', 'friendly', 'non-judgmental', 'consistent', 'positive', 'happy', 'energetic',
+dog_terms = ['Loyal', 'trustworthy', 'friendly', 'non-judgmental', 'consistent', 'positive', 'happy', 'energetic',
        'personable', 'selfless', 'giving', 'strong', 'honest', 'loving', 'communicative', 'sporty',
        'takedirectionwithoutcomplaint', 'independent', 'fearless', 'curious', 'attentive', 'compliant', 'athletic',
        'compassionate', 'thoughtful', 'funny', 'strategic', 'clever', 'insightful', 'intuitive', 'deserving',
        'comforting', 'therapeutic', 'understanding', 'intelligent']
 
-bleach = ['Ichigo Kurosaki', 'Orihime Inoue', 'Rukia Kuchiki', 'Renji Abarai', 'Uryū Ishida', 'Yasutora Sado',
+anime_bleach = ['Ichigo Kurosaki', 'Orihime Inoue', 'Rukia Kuchiki', 'Renji Abarai', 'Uryū Ishida', 'Yasutora Sado',
           'Kisuke Urahara', 'Kensei Muguruma', 'Soifon', 'Maki Ichinose', 'Tessai Tsukabishi', 'Rangiku Matsumoto',
           'Byakuya Kuchiki', 'Kenpachi Zaraki', 'Sōsuke Aizen', 'Ryūsei', 'Yammy', 'Lirin', 'Noba', 'Tatsuki Arisawa',
           'Grimmjow Jaggerjack', 'Yachiru Kusajishi', 'Shigekuni Yamamoto-Genryūsai', 'Hiyori Sarugaki',
@@ -990,7 +984,7 @@ bleach = ['Ichigo Kurosaki', 'Orihime Inoue', 'Rukia Kuchiki', 'Renji Abarai', '
           'Ururu Tsumugiya', 'Keigo Asano', 'Shūkurō Tsukishima', 'Noitora', 'Nel tu', 'Wonderweiss Margera',
           'Aaroniero Arruruerie', 'Ulquiorra', 'Retsu Unohana', 'Avirama Redder', 'Kurōdo']
 
-phobias = ['Arachnophobia', 'Ophidiophobia', 'Acrophobia', 'Agoraphobia', 'Cynophobia', 'Astraphobia', 'Claustrophobia',
+phobia_types = ['Arachnophobia', 'Ophidiophobia', 'Acrophobia', 'Agoraphobia', 'Cynophobia', 'Astraphobia', 'Claustrophobia',
            'Mysophobia', 'Aerophobia', 'Trypophobia', 'Carcinophobia', 'Thanatophobia', 'Glossophobia', 'Monophobia',
            'Atychiphobia', 'Ornithophobia', 'Alektorophobia', 'Enochlophobia', 'Aphenphosmphobia', 'Trypanophobia',
            'Anthropophobia', 'Aquaphobia', 'Autophobia', 'Hemophobia', 'Gamophobia',
@@ -1008,9 +1002,9 @@ phobias = ['Arachnophobia', 'Ophidiophobia', 'Acrophobia', 'Agoraphobia', 'Cynop
            'Disposophobia', 'Numerophobia', 'Ombrophobia', 'Coasterphobia', 'Thalassophobia', 'Scoleciphobia',
            'Kinemortophobia', 'Myrmecophobia', 'Taphophobia']
 
-deathNOTE = ['L', 'Light Yagami', 'Misa Amane', 'Touta Matsuda', 'Near', 'Watari', 'Soichiro Yagami', 'Mello']
+anime_deathnote = ['L', 'Light Yagami', 'Misa Amane', 'Touta Matsuda', 'Near', 'Watari', 'Soichiro Yagami', 'Mello']
 
-securityTERMS = ['Admin privilege', 'Advanced Persistent Threats', 'Adware', 'Attack vector', 'Authenticator',
+security_terms = ['Admin privilege', 'Advanced Persistent Threats', 'Adware', 'Attack vector', 'Authenticator',
                  'Backdoor', 'Bitcoin', 'Black hat hacking', 'Bot', 'Botnet', 'Bug', 'Brute force attack', 'CAPTCHA',
                  'Catfishing', 'Closed source', 'Cloud security', 'Cookie', 'Cyber security', 'Crypojacking',
                  'Data breach', 'Data encryption', 'Data protection', 'Digital security', 'DoS', 'DDoS',
@@ -1023,7 +1017,7 @@ securityTERMS = ['Admin privilege', 'Advanced Persistent Threats', 'Adware', 'At
                  'Trialware', 'Trojan', 'Two-factor authentication', 'Virtual Private Network', 'Virus',
                  'White hat hacking', 'Worm', 'Zero-day exploit']
 
-weeknd = ['High For This', 'What You Need', 'The Morning', 'Wicked Games', 'The Party & the After Party', 'Coming Down',
+singer_weeknd = ['High For This', 'What You Need', 'The Morning', 'Wicked Games', 'The Party & the After Party', 'Coming Down',
           'Loft Music', 'The Knowing', 'Twenty Eight', 'Alone Again', 'Too Late', 'Hardest To Love', 'Scared To Live',
           'Snowchild', 'Escape From LA', 'Heartless', 'Faith', 'Blinding Lights', 'In Your Eyes', 'Save Your Tears',
           'Repeat After Me', 'After Hours', 'Until I Bleed Out', 'Starboy', 'Party Monster', 'False Alarm', 'Reminder',
@@ -1036,19 +1030,19 @@ weeknd = ['High For This', 'What You Need', 'The Morning', 'Wicked Games', 'The 
           'Can’t Feel My Face', 'Shameless', 'Earned It', 'In the Night', 'As You Are', 'Dark Times', 'Prisoner',
           'Angel', 'Call Out My Name', 'Try Me', 'Wasted Times', 'I Was Never There', 'Hurt You', 'Privilege']
 
-fma = ['Edward Elric', 'Alphonse Elric', 'Winry Rockbell', 'Roy Mustang', 'Scar', 'Truth', 'Lin Yao', 'May Chang',
+anime_fma = ['Edward Elric', 'Alphonse Elric', 'Winry Rockbell', 'Roy Mustang', 'Scar', 'Truth', 'Lin Yao', 'May Chang',
        'Homunculi']
 
-shinchan = ['Shinchan', 'Kazama', 'Nene', 'Bo', 'Masao', 'Hiroshi', 'Himawari', 'Misae', 'Shiro', 'Nanako', 'Keiko',
+anime_shinchan = ['Shinchan', 'Kazama', 'Nene', 'Bo', 'Masao', 'Hiroshi', 'Himawari', 'Misae', 'Shiro', 'Nanako', 'Keiko',
             'Matsuzaka', 'Ai', 'Yoshinaga', 'Masumi', 'Yoshirin', 'Micchi']
 
-bheem = ['Bheem', 'Chutki', 'Raju', 'Kalia', 'Jaggu', 'Dholu', 'Bholu', 'Tuntun Mausi', 'Raja Indravarma',
+cartoon_bheem = ['Bheem', 'Chutki', 'Raju', 'Kalia', 'Jaggu', 'Dholu', 'Bholu', 'Tuntun Mausi', 'Raja Indravarma',
          'Rajkumari Indumati']
 
-basket = ['Seirin High', 'Kaijo High', 'Shutoku High', 'Too Academy', 'Yosen High', 'Rakuzan High',
+anime_kuroko_basket = ['Seirin High', 'Kaijo High', 'Shutoku High', 'Too Academy', 'Yosen High', 'Rakuzan High',
           'Kirisaki Daichi High']
 
-dbs = ['Goku', 'Vegeta', 'Whis', 'Beerus', 'Krillin', 'Piccolo', 'Gohan', 'Bulma Briefs', 'Master Roshi', 'Elder Kai',
+anime_dbs = ['Goku', 'Vegeta', 'Whis', 'Beerus', 'Krillin', 'Piccolo', 'Gohan', 'Bulma Briefs', 'Master Roshi', 'Elder Kai',
        'Supreme Kai', 'Android 18', 'Tien', 'Goten', 'Trunks', 'Vados', 'Zeno', 'Chi Chi', 'Champa', 'Frieza',
        'Grand Priest', 'Hercule', 'Mai', 'Marron', 'Toppo', 'Videl', 'Cabba', 'Android 17', 'Shuu', 'Fuwa', 'Jiren',
        'Pilaf', 'Hit', 'Buu', 'Oolong', 'Dende', 'Jaco', 'Dyspo', 'Belmod', 'Kai', 'Gowasu', 'Dr. Briefs', 'Arack',
@@ -1065,9 +1059,9 @@ dbs = ['Goku', 'Vegeta', 'Whis', 'Beerus', 'Krillin', 'Piccolo', 'Gohan', 'Bulma
        'Turbo Norimaki', 'Dr. Mashirito', 'Future Gohan', 'Lavender', 'Basil', 'Comfrey', 'Hop', 'Roselle', 'Oregano',
        'Sorrel']
 
-naruto_ace = ['rasengan', 'rasen shuriken', 'sage mode', 'tailed beast transformation', 'healing', 'Shadow clown',
+anime_naruto_narutopowers = ['rasengan', 'rasen shuriken', 'sage mode', 'tailed beast transformation', 'healing', 'Shadow clown',
               'tailed beast rasengen ', 'tailed rasen shuriken', 'reverse haren no jutsu', 'sexy no jutsu', 'summoning',
               '']
 
-sasuke_ace = ['chidori', 'Kirin', 'shadow clown', 'summoning', 'Susano', 'flame control', "Indra's arrow",
+anime_naruto_sasukepowers = ['chidori', 'Kirin', 'shadow clown', 'summoning', 'Susano', 'flame control', "Indra's arrow",
               'teleportation', 'substitution']

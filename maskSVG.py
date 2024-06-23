@@ -1,7 +1,7 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import ImageFont
 
 class MASKSVG:
-    def __init__(self, width=1000, height=1000, text=None,padding=8, fontsize=100, font=r"C:\Windows\Fonts\BRLNSDB.TTF"):
+    def __init__(self, width=1000, height=1000, text=None,padding=8, fontsize=100, font=r"C:\Windows\Fonts\arial.ttf"):
         self.font = font
         self.text = text
         self.fontsize = fontsize
@@ -10,30 +10,30 @@ class MASKSVG:
         self.data = ""
         self.padding = padding
 
-        if type(self.padding) == int and self.padding > 0:
-            Exception("UNdefines")
+        if type(self.padding) != int and self.padding < 0:
+            raise ValueError("Padding must be a positive integer.")
 
 
     def func(self):
-        font = ImageFont.truetype(font=self.font, size=self.fontsize)
-        fontSize = font.getsize(text=self.text)
-        return fontSize[0]
+        try:
+            font = ImageFont.truetype(font=self.font, size=self.fontsize)
+        except OSError:
+            raise FileNotFoundError(f"Font file '{self.font}' not found.")
+        fontSize = font.getsize(self.text)
+        return fontSize[0]  # Returning width
 
     def getBestFit(self):
         while self.func() >= self.maxwidth:
             self.fontsize -= 2
-            self.func()
-
         print("Best fit: ", self.fontsize)
         return self.fontsize
-
 
     def generateSVG(self):
         self.fontsize = self.getBestFit()
         self.fontsize = self.fontsize - (self.fontsize // self.padding)
 
         fnt = ImageFont.truetype(self.font, size=self.fontsize)
-        w, h = fnt.getsize(text=self.text)
+        w, h = fnt.getsize(self.text)
 
         width = (self.maxwidth - w) // 2
         height = self.maxheight // 2
@@ -54,7 +54,16 @@ class MASKSVG:
         with open("sample.svg", mode="w") as file:
             file.write(self.data)
 
-zero = MASKSVG(fontsize=200, width=1000, height=1000, text="Kai")
-zero.generateSVG()
-zero.save()
+zero = MASKSVG(
+    font=f"C:\Windows\Fonts\BRLNSR.TTF",
+    fontsize=200, 
+    width=1000,
+    height=1000,
+    text="Aconite",
+    padding=8
+)
 
+print(zero.generateSVG())
+
+# zero.generateSVG()
+# zero.save()

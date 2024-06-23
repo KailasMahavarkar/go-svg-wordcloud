@@ -10,12 +10,14 @@ import threading
 import _thread
 import random
 import inflector
-from Improve import timesec, executor
+from helpers import timesec, executor
 import aiohttp
 import asyncio
 import async_timeout
 from typing import Union, List, AnyStr
 import functools
+
+
 
 
 def ignore_unhashable(func):
@@ -33,35 +35,6 @@ def ignore_unhashable(func):
 
     wrapper.__uncached__ = uncached
     return wrapper
-
-
-async def get(url):
-    async with aiohttp.ClientSession() as session:
-        try:
-            async with session.get(url) as response:
-                return await response.text()
-        except Exception:
-            return ''
-
-
-async def trigger(searchLinks: list, minlength: int = 3, maxlength: int = 15, timeout: int = 5):
-    tasks = [asyncio.create_task(get(url=url)) for url in searchLinks]
-    try:
-        with async_timeout.timeout(timeout):
-            await asyncio.gather(*tasks)
-    except asyncio.TimeoutError:
-        print('timed out')
-        return "Request Closed by Timeout: {}"
-    finally:
-        master = []
-        # O(n)
-        for i, task in enumerate(tasks):
-            if task.done() and not task.cancelled():
-                soup = BeautifulSoup(task.result(), "lxml")
-                for word in str(soup.get_text()).replace('\n', ' ').replace('\t', ' ').replace('\r', ' ').split(' '):
-                    if minlength <= len(word) <= maxlength:
-                        master.append(word)
-        return master
 
 
 @contextmanager
@@ -101,14 +74,29 @@ def searchWordFilter(query: str = 'naruto', links: List = None, minlength: int =
             searchLinks = links
         else:
             searchLinks = search(term=query, num_results=numresult)
+
+        allwords = []
+        for link in searchLinks:
+            try:
+                with time_limit(timeout):
+                    response = requests.get(link)
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    text = soup.get_text()
+                    words = text.split()
+                    allwords.extend(words)
+            except Exception as e:
+                print(f"Error occurred: {e}")
+        
+
         return WordFilter(
-            words=asyncio.run(
-                trigger(minlength=minlength, maxlength=maxlength, searchLinks=searchLinks, timeout=timeout)),
+            words=allwords,
             customlist=customlist,
             stoptypes=stoptypes,
             ignorelist=ignorelist,
             checknumeric=checknumeric,
             minoccurence=minoccurence,
+            minlength=minlength,
+            maxlength=maxlength,
             factor=factor,
             sort=sort,
             raw=raw,
@@ -237,7 +225,6 @@ def WordFilter(words: list, minlength: int = 3, maxlength: int = 10, stoptypes=N
         ):
             result.append(word.lower())
 
-    # return result
 
     if singularize:
         singularizedList = []
@@ -270,45 +257,37 @@ def WordFilter(words: list, minlength: int = 3, maxlength: int = 10, stoptypes=N
         return {key: value for key, value in context if value >= minoccurence}
 
 
-if __name__ == '__xmain__':
-    text = """"""
+if __name__ == '__main__':
+    gigTeaching = ""
+
     # @ignore_unhashable
     # @functools.lru_cache(6)
 
-    @timesec
-    def main():
-        res = searchWordFilter(
-            query='Mobile Cases',
-            minlength=3,
-            maxlength=30,
-            minoccurence=1,
-            ignorelist=[],
-            mode=4,
-            stoptypes=['max', 'corrected', 'stopmax', 'negative'],
-            # singularize=True,
-            sort=True,
-            raw=False,
-        )
+    # @timesec
+    def main(query="piracy"):
+        print("started ....")
 
-        ie = []
-        for k, v in res.items():
-            if v > 0:
-                ie.append(k)
-        print(", ".join(ie))
+        print(WordFilter(
+            words=['human',  'human', 'bello', "the", "the", 'buffello'],
+            stoptypes=['max', 'negative'],
+        ))
 
-    main()
+        # res = searchWordFilter(
+        #     query=query,
+        #     minlength=3,
+        #     maxlength=10,
+        #     minoccurence=1,
+        #     ignorelist=[],
+        #     mode=4,
+        #     stoptypes=['max', 'corrected', 'stopmax', 'negative'],
+        #     # singularize=True,
+        #     sort=True,
+        #     raw=False,
+        # )
+        # ie = []
+        # for k, v in res.items():
+        #     if v > 0:
+        #         ie.append(k)
+        # print(", ".join(ie))
 
-
-if __name__ == "__main__":
-    result = searchWordFilter(
-        links=["https://www.sortlist.com/agency/fk-media"],
-        minlength=2,
-        maxlength=30,
-        minoccurence=1,
-        ignorelist=[],
-        mode=4,
-        stoptypes=['max', 'corrected', 'stopmax', 'negative'],
-        singularize=False,
-        sort=True,
-        raw=False
-    )
+    main("pirates")
