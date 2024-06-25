@@ -1,62 +1,95 @@
 package wordfilter
 
 import (
+	"fmt"
 	"math"
 	"strings"
 )
 
-func WordFilter(
-	words []string,
+func FilterWords(
+	stopWordList []string,
+	ignoreList []string,
+	wordList []string,
 	minLength int,
 	maxLength int,
 	minOccurrence int,
-	stopTypes []string,
+	shouldNormalize bool,
 ) map[string]int {
+	finalStopwordsMap := make(map[string]bool)
+	ignoreMap := make(map[string]bool)
+	finalMap := make(map[string]int)
 
-	// make use of the getStopwords function to get the stopwords
-	// based on the stop types provided by the user
-	stopwords := getStopwords(stopTypes)
-
-	ignoreList := make(map[string]bool)
-
-	// Populate ignore list based on stop types
-	for _, word := range words {
-		word = strings.ToLower(word)
-		if len(word) < minLength || len(word) > maxLength {
-			continue
-		}
-		if stopwords[word] {
-			continue
-		}
-		if _, found := ignoreList[word]; found {
-			continue
-		}
-		ignoreList[word] = true
+	for _, word := range ignoreList {
+		ignoreMap[word] = true
 	}
 
-	// Count occurrences of filtered words
-	for word := range ignoreList {
-		if len(word) < minLength || len(word) > maxLength {
-			continue
-		}
-		if _, found := ignoreList[word]; found {
-			continue
-		}
-
-		ignoreList[word] = true
+	stopBasic, err := ReadStopwordsFile("./stopwords/stopwords_basic.json")
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	// Apply min occurrence filter and logarithmic scaling as int(math.Log2(float64(count)))
-	filteredResult := make(map[string]int)
+	stopAll, err := ReadStopwordsFile("./stopwords/stopwords_all.json")
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	for word := range ignoreList {
-		if ignoreList[word] {
-			count := strings.Count(strings.Join(words, " "), word)
-			if count >= minOccurrence {
-				filteredResult[word] = int(math.Log2(float64(count)))
+	stopNegative, err := ReadStopwordsFile("./stopwords/stopwords_negative.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	stopMaps := map[string]map[string]bool{
+		"basic":    stopBasic,
+		"all":      stopAll,
+		"negative": stopNegative,
+	}
+
+	for _, stopType := range stopWordList {
+		if stopMap, ok := stopMaps[stopType]; ok {
+			for word := range stopMap {
+				finalStopwordsMap[word] = true
 			}
 		}
 	}
 
-	return filteredResult
+	// iterate through the wordList and check if the word is in the finalMap
+	// if it is in the finalMap, print the word
+	for _, word := range wordList {
+		// convert the word to lowercase
+		word = strings.ToLower(word)
+
+		// trim any whitespace from the word
+		word = strings.TrimSpace(word)
+
+		// allow only ascii characters
+		word = strings.Map(func(r rune) rune {
+			if r > 31 && r < 127 {
+				return r
+			}
+			return -1
+		}, word)
+
+		if len(word) < minLength || len(word) > maxLength {
+			continue
+		}
+
+		if _, found := finalStopwordsMap[word]; found {
+			continue
+		} else {
+			finalMap[word]++
+		}
+	}
+
+	// check if the word occurs more than minOccurrence times
+	for word, count := range finalMap {
+		if count < minOccurrence {
+			delete(finalMap, word)
+		} else {
+			if shouldNormalize {
+				finalMap[word] = int(math.Log2(float64(count)))
+			}
+		}
+	}
+
+	return finalMap
 }

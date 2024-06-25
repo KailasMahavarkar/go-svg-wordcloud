@@ -9,7 +9,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-// FetchWebsite fetches the website content given a URL and a timeout
 func FetchWebsite(url string, timeout time.Duration) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
@@ -52,6 +51,33 @@ func MultipleFetchWebsite(urls []string, timeout time.Duration) ([]string, []err
 			errors = append(errors, err)
 		} else {
 			results = append(results, text)
+		}
+	}
+	return results, errors
+}
+
+func MultipleFetchWebsiteAsync(urls []string, timeout time.Duration) ([]string, []error) {
+	type result struct {
+		text string
+		err  error
+	}
+
+	resultsCh := make(chan result)
+	for _, url := range urls {
+		go func(url string) {
+			text, err := FetchWebsite(url, timeout)
+			resultsCh <- result{text, err}
+		}(url)
+	}
+
+	var results []string
+	var errors []error
+	for range urls {
+		res := <-resultsCh
+		if res.err != nil {
+			errors = append(errors, res.err)
+		} else {
+			results = append(results, res.text)
 		}
 	}
 	return results, errors

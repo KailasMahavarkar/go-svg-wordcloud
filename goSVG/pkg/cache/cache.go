@@ -1,8 +1,24 @@
 package cache
 
 import (
+	"sync"
 	"time"
 )
+
+type CacheEntry struct {
+	Value      SearchRequest
+	ExpiryTime time.Time
+}
+
+type Cache struct {
+	cache map[string]CacheEntry
+	mutex sync.RWMutex
+}
+
+type SearchRequest struct {
+	Timeout int
+	Links   []string
+}
 
 func NewURLCache() *Cache {
 	return &Cache{
@@ -10,7 +26,7 @@ func NewURLCache() *Cache {
 	}
 }
 
-func (c *Cache) Get(key string) (string, bool) {
+func (c *Cache) Get(key string) (SearchRequest, bool) {
 	c.mutex.RLock()
 	entry, found := c.cache[key]
 	c.mutex.RUnlock()
@@ -19,20 +35,21 @@ func (c *Cache) Get(key string) (string, bool) {
 		return entry.Value, true
 	}
 
-	return "", false
+	return SearchRequest{
+		Timeout: 0,
+		Links:   []string{},
+	}, false
 }
 
-func (c *Cache) Set(key string, value string, expiry time.Time) {
+func (c *Cache) Set(key string, value SearchRequest, expiry time.Time) {
 	c.mutex.Lock()
 	c.cache[key] = CacheEntry{
 		Value:      value,
 		ExpiryTime: expiry,
 	}
-
 	c.mutex.Unlock()
 }
 
-// run a cron job to clear the cache every "T" minutes
 func (c *Cache) Clear() {
 	c.mutex.Lock()
 	for key, entry := range c.cache {
@@ -43,7 +60,8 @@ func (c *Cache) Clear() {
 	c.mutex.Unlock()
 }
 
-// get all items in the cache
 func (c *Cache) Items() map[string]CacheEntry {
+	c.mutex.RLock()
+	defer c.mutex.RUnlock()
 	return c.cache
 }
