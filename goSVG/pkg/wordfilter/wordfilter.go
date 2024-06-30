@@ -2,7 +2,7 @@ package wordfilter
 
 import (
 	"fmt"
-	"math"
+	"github.com/wk8/go-ordered-map/v2"
 	"strings"
 )
 
@@ -14,10 +14,11 @@ func FilterWords(
 	maxLength int,
 	minOccurrence int,
 	shouldNormalize bool,
-) map[string]int {
+) *orderedmap.OrderedMap[string, int] {
 	finalStopwordsMap := make(map[string]bool)
 	ignoreMap := make(map[string]bool)
-	finalMap := make(map[string]int)
+
+	om := orderedmap.New[string, int]()
 
 	for _, word := range ignoreList {
 		ignoreMap[word] = true
@@ -52,8 +53,8 @@ func FilterWords(
 		}
 	}
 
-	// iterate through the wordList and check if the word is in the finalMap
-	// if it is in the finalMap, print the word
+	// iterate through the wordList and check if the word is in the tempMap
+	// if it is in the tempMap, print the word
 	for _, word := range wordList {
 		// convert the word to lowercase
 		word = strings.ToLower(word)
@@ -76,20 +77,25 @@ func FilterWords(
 		if _, found := finalStopwordsMap[word]; found {
 			continue
 		} else {
-			finalMap[word]++
+			// get previous count of the word
+			// if the word is not in the map, the count will be 0
+			count, _ := om.Get(word)
+
+			// increment the count of the word by 1
+			om.Set(word, count+1)
 		}
 	}
 
 	// check if the word occurs more than minOccurrence times
-	for word, count := range finalMap {
-		if count < minOccurrence {
-			delete(finalMap, word)
-		} else {
-			if shouldNormalize {
-				finalMap[word] = int(math.Log2(float64(count)))
-			}
-		}
-	}
+	// for word, count := range tempMap {
+	// 	if count < minOccurrence {
+	// 		delete(tempMap, word)
+	// 	} else {
+	// 		if shouldNormalize {
+	// 			tempMap[word] = int(math.Log2(float64(count)))
+	// 		}
+	// 	}
+	// }
 
-	return finalMap
+	return om
 }

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"gosvg/pkg/cache"
+	"gosvg/pkg/scraper"
 
 	"github.com/labstack/echo/v4"
 
@@ -52,44 +53,45 @@ func getWebLinks(searchTerm string) ([]string, error) {
 
 func main() {
 	e := echo.New()
+	e.HideBanner = true
+	e.HidePort = true
 
-	// weblinks, err := getWebLinks("naruto")
+	weblinks, _ := scraper.ScrapeGoogleLinks("naruto")
 
-	// if err != nil {
-	// 	e.Logger.Fatal(err)
+	// if len(weblinks) == 0 {
+	// 	fmt.Println("No links found")
 	// }
 
-	// for _, link := range weblinks {
-	// 	println("-->", link)
+	for count, link := range weblinks {
+		fmt.Println(count, link)
+	}
+
+	// words, _ := scraper.MultipleFetchWebsite(weblinks, 3*time.Second)
+
+	// for word, count := range words {
+	// 	fmt.Println(word, count)
 	// }
 
-	fmt.Println(googlesearch.Search(nil, "cars for sale in Toronto, Canada"))
-	// // Example words to filter
-	// wordList := []string{
-	// 	"The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog",
-	// 	"The", "quick", "fox", "is", "quick",
-	// 	"brown", "fox", "is", "lazy",
-	// 	"The", "dog", "is", "lazy",
-	// 	"The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog",
-	// 	"The", "quick", "fox", "is", "quick",
-	// }
-	// ignoreWords := []string{}
-	// stopTypes := []string{"basic", "all", "negative"}
-
-	// words := wordfilter.FilterWords(
-	// 	stopTypes,
-	// 	ignoreWords,
-	// 	wordList,
+	// // var filteredWords *orderedmap.OrderedMap[string, int]
+	// filteredWords := wordfilter.FilterWords(
+	// 	[]string{"basic", "all", "negative"},
+	// 	[]string{},
+	// 	words,
 	// 	2,
 	// 	10,
 	// 	2,
 	// 	false,
 	// )
 
+	// for pair := filteredWords.Oldest(); pair != nil; pair = pair.Next() {
+	// 	fmt.Printf("%s: %d\n", pair.Key, pair.Value)
+	// }
+
 	// for word, count := range words {
 	// 	println(word, count)
 	// }
 
 	// Start server
+	fmt.Println("Server started at http://localhost:8080")
 	e.Logger.Fatal(e.Start(":8080"))
 }
